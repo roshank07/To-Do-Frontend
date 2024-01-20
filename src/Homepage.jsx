@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from './ArticleEditor.module.css'; // Import CSS Modules
+import backend from './process';
 
 class ArticleEditor extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class ArticleEditor extends Component {
   }
 
   fetchSavedArticles = () => {
-    fetch('http://localhost:3001/api/savedArticles')
+    fetch(`${backend.url}/api/savedArticles`)
       .then((response) => response.json())
       .then((data) => this.setState({ savedArticles: data }))
       .catch((error) => console.error('Error fetching saved articles:', error));
@@ -29,7 +30,7 @@ class ArticleEditor extends Component {
   handleSaveArticle = (e) => {
     e.preventDefault();
 
-    fetch('http://localhost:3001/api/savedArticles', {
+    fetch(`${backend.url}/api/savedArticles`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +45,7 @@ class ArticleEditor extends Component {
   };
 
   handleDeleteArticle = (index) => {
-    fetch(`http://localhost:3001/api/savedArticles/${index}`, {
+    fetch(`${backend.url}/api/savedArticles/${index}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
